@@ -6,7 +6,8 @@ long prevs = 0;
 void pressButton()
 {
     long ts = millis();
-    if(ts - prevs > 1000) {
+    if (ts - prevs > 1000)
+    {
         prevs = ts;
         pressed = true;
     }
@@ -25,6 +26,7 @@ void WccsTask::init(int period)
 {
     Task::init(period);
     this->state = AUTOMATIC;
+    this->container->getLcd()->print("Automatic Mode");
 }
 
 void WccsTask::tick()
@@ -33,10 +35,9 @@ void WccsTask::tick()
     {
     case AUTOMATIC:
     {
-        Serial.println("Auto");
         if (pressed)
         {
-            Serial.println("Premuto");
+            this->container->getLcd()->print("Manual Mode");
             state = MANUAL;
             pressed = false;
         }
@@ -46,7 +47,7 @@ void WccsTask::tick()
     {
         if (pressed)
         {
-            Serial.println("Premuto MANUALE");
+            this->container->getLcd()->print("Automatic Mode");
             state = AUTOMATIC;
             pressed = false;
         }
@@ -54,7 +55,6 @@ void WccsTask::tick()
         {
             int value = this->container->getPotentiometer()->getValveOpeningLevel();
             this->container->setNextPosValve(value);
-            Serial.println("MANUALE");
         }
     }
     break;
