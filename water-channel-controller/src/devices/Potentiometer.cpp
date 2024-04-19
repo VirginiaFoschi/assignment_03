@@ -2,12 +2,13 @@
 
 Potentiometer::Potentiometer()
 {
-    
 }
 
 double Potentiometer::getValveOpeningLevel()
 {
-    return 0.0;
+    int sensorValue = analogRead(PIN_POT);
+    int valvePos = map(sensorValue, 0, 1023, 0, 180);
+    return valvePos;
 }
 
 Potentiometer::~Potentiometer()

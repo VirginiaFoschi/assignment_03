@@ -4,8 +4,9 @@
 Container::Container()
 {
     this->lcd = new LCD();
-    this->button = new Button(3);
+    this->button = new Button(2);
     this->gateDevice = new Gate();
+    this->potentiometer = new Potentiometer();
     MsgService.init();
 }
 
@@ -24,6 +25,10 @@ Gate *Container::getGateDevice()
 Button *Container::getButton()
 {
     return this->button;
+}
+
+Potentiometer *Container::getPotentiometer() {
+    return this->potentiometer;
 }
 
 void Container::sendMessage(String msg)

@@ -15,11 +15,11 @@ void ValveTask::init(int period)
 
 void ValveTask::tick()
 {
+    int gate = this->container->getNextPositionValve();
     switch (state)
     {
     case IDLE:
     {
-        int gate = this->container->getNextPositionValve();
         if (gate != this->container->getGateDevice()->getCurrentPos())
         {
             state = MOVING;
@@ -28,7 +28,6 @@ void ValveTask::tick()
     break;
     case MOVING:
     {
-        int gate = this->container->getNextPositionValve();
         if (this->container->getGateDevice()->move(gate))
         {
             state = IDLE;

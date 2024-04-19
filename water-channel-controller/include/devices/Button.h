@@ -8,7 +8,6 @@ class Button
 private:
     bool *enable;
     int pin;
-    bool pressed = false;
     long lastTimeSync;
 
 public:

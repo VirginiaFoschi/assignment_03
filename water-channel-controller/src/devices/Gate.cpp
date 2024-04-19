@@ -22,7 +22,6 @@ bool Gate::close(int position)
 
 bool Gate::move(int position)
 {
-    Serial.println(this->pos);
     if (this->pos < position)
     {
         return close(position);
