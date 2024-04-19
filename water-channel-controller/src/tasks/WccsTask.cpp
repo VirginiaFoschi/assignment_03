@@ -1,10 +1,15 @@
 #include "tasks/WccsTask.h"
 
 volatile bool pressed = false;
+long prevs = 0;
 
 void pressButton()
 {
-    pressed = true;
+    long ts = millis();
+    if(ts - prevs > 1000) {
+        prevs = ts;
+        pressed = true;
+    }
 }
 
 WccsTask::WccsTask(Container *container)
