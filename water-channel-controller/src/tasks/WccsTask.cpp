@@ -31,6 +31,10 @@ void WccsTask::init(int period)
 
 void WccsTask::tick()
 {
+    if(this->container->isMsgReceived())
+{
+    this->container->getLcd()->print(this->container->getMsg());
+}    
     switch (state)
     {
     case AUTOMATIC:
