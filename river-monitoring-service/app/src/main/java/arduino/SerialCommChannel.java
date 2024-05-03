@@ -3,6 +3,9 @@ package arduino;
 
 
 import java.util.concurrent.*;
+
+import container.ServiceContainer;
+import include.Observer;
 import jssc.*;
 
 /**
@@ -11,13 +14,14 @@ import jssc.*;
  * @author aricci
  *
  */
-public class SerialCommChannel implements CommChannel, SerialPortEventListener {
+public class SerialCommChannel implements CommChannel, SerialPortEventListener, Observer {
 
 	private SerialPort serialPort;
 	private BlockingQueue<String> queue;
 	private StringBuffer currentMsg = new StringBuffer("");
+	private ServiceContainer service;
 	
-	public SerialCommChannel(String port, int rate) throws Exception {
+	public SerialCommChannel(ServiceContainer service, String port, int rate) throws Exception {
 		queue = new ArrayBlockingQueue<String>(100);
 
 		serialPort = new SerialPort(port);
@@ -110,5 +114,12 @@ public class SerialCommChannel implements CommChannel, SerialPortEventListener {
                 System.out.println("Error in receiving string from COM-port: " + ex);
             }
         }
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		int valveOpening = this.service.getValveOpening();
+		this.sendMsg(Integer.toString(valveOpening));
 	}
 }

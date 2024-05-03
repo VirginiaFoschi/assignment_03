@@ -1,3 +1,4 @@
+package container;
 public class ServiceContainer {
 
     public enum State {
@@ -54,7 +55,7 @@ public class ServiceContainer {
         this.freq = freq;
     }
 
-    public void updateState(int waterLevel) {
+    public void updateState(float waterLevel) {
         if (waterLevel < WL1) {
             this.freq = F1;
             this.state = State.TOO_LOW;

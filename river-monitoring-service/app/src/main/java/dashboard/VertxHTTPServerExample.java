@@ -3,17 +3,27 @@ package dashboard;
 
 import java.util.Random;
 
+import container.ServiceContainer;
+import include.Observer;
 import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 
-public class VertxHTTPServerExample extends AbstractVerticle {
+public class VertxHTTPServerExample extends AbstractVerticle implements Observer {
+
+	private ServiceContainer service;
+	private Router router;
+
+	public VertxHTTPServerExample(ServiceContainer service) {
+		this.service = service;
+	}
+
 	@Override
 	public void start() throws Exception {
 		// Create a Router
-		Router router = Router.router(vertx);
+		this.router = Router.router(vertx);
 
 		// Imposta il BodyHandler per tutte le route
 		router.route().handler(BodyHandler.create());
@@ -27,11 +37,11 @@ public class VertxHTTPServerExample extends AbstractVerticle {
 				.allowedHeader("Content-Type"));
 
 		// Mount the handler for all incoming requests at every path and HTTP method
-		router.get().handler(context -> {
-			Random random = new Random();
-			context.json(
-					new JsonObject().put("Sonar", random.nextInt(0, 200)).put("Valve", 180).put("State", "Tutto bene"));
-		});
+		// router.get().handler(context -> {
+		// 	Random random = new Random();
+		// 	context.json(
+		// 			new JsonObject().put("Sonar", random.nextInt(0, 200)).put("Valve", 180).put("State", "Tutto bene"));
+		// });
 
 		router.post().handler(context -> {
 			JsonObject body = context.getBodyAsJson(); // Verifica se il corpo è null
@@ -54,6 +64,19 @@ public class VertxHTTPServerExample extends AbstractVerticle {
 				.listen(8080)
 				// Print the port
 				.onSuccess(server -> System.out.println("HTTP server started on port " + server.actualPort()));
+	}
+
+	private void sendData(){
+		this.router.get().handler(context -> {
+			Random random = new Random();
+			context.json(
+					new JsonObject().put("Sonar", random.nextInt(0, 200)).put("Valve", 180).put("State", "Tutto bene"));
+		});
+	}
+
+	@Override
+	public void update() {
+		this.sendData();
 	}
 
 	// public static void main(String[] args) {
