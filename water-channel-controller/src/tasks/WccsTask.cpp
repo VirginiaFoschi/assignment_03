@@ -1,5 +1,6 @@
 #include "tasks/WccsTask.h"
 
+
 volatile bool pressed = false;
 long prevs = 0;
 
@@ -31,14 +32,15 @@ void WccsTask::init(int period)
 
 void WccsTask::tick()
 {
-    if(this->container->isMsgReceived())
-{
-    this->container->getLcd()->print(this->container->getMsg());
-}    
     switch (state)
     {
     case AUTOMATIC:
     {
+        if (this->container->isMsgReceived())
+        {
+            int value = this->container->getMsg().toInt();
+            this->container->setNextPosValve((value*180)/ 100);
+        }
         if (pressed)
         {
             this->container->getLcd()->print("Manual Mode");

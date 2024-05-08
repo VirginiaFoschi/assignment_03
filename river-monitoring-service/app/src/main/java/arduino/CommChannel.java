@@ -1,12 +1,13 @@
 package arduino;
 
+import include.Observer;
 
 /**
  * Simple interface for an async msg communication channel
  * @author aricci
  *
  */
-public interface CommChannel {
+public interface CommChannel extends Observer{
 	
 	/**
 	 * Send a message represented by a string (without new line).

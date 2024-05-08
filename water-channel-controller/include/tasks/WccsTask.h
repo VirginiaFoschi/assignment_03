@@ -3,6 +3,7 @@
 #include "Task.h"
 
 
+
 class WccsTask : public Task
 {
 private:

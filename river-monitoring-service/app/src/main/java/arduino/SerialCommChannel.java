@@ -14,7 +14,7 @@ import jssc.*;
  * @author aricci
  *
  */
-public class SerialCommChannel implements CommChannel, SerialPortEventListener, Observer {
+public class SerialCommChannel implements CommChannel, SerialPortEventListener {
 
 	private SerialPort serialPort;
 	private BlockingQueue<String> queue;
@@ -22,6 +22,7 @@ public class SerialCommChannel implements CommChannel, SerialPortEventListener, 
 	private ServiceContainer service;
 	
 	public SerialCommChannel(ServiceContainer service, String port, int rate) throws Exception {
+		this.service = service;
 		queue = new ArrayBlockingQueue<String>(100);
 
 		serialPort = new SerialPort(port);

@@ -13,8 +13,8 @@ const float vs = 331.45 + 0.62 * temperature;
 
 /* wifi network info */
 
-const char* ssid = "EOLO_082229";
-const char* password = "hX9kpatJ8";
+const char* ssid = "FRITZ!Box 7530 LB";
+const char* password = "07577245428876606273";
 
 /* MQTT server address */
 const char* mqtt_server = "broker.mqtt-dashboard.com";
@@ -30,7 +30,7 @@ PubSubClient client(espClient);
 
 
 unsigned long lastMsgTime = 0;
-unsigned int currentFrequence = 10000;
+unsigned int currentFrequence = 2000;
 char msg[MSG_BUFFER_SIZE];
 
 
@@ -63,7 +63,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   message[length] = '\0'; // Imposta il carattere terminatore di stringa
 
   int value = atoi(message);
-  //currentFrequence = value;
+  currentFrequence = value;
   Serial.println(value);
 }
 
@@ -108,7 +108,7 @@ float getDistance()
     float tUS = pulseIn(echoPin, HIGH);
     float t = tUS / 1000.0 / 1000.0 / 2;
     float d = t * vs;
-    return d;
+    return d * 100;
 }
 
 void setup() {
@@ -125,7 +125,7 @@ void setup() {
 
 bool sendMessage() {
   /* creating a msg in the buffer */
-    snprintf (msg, MSG_BUFFER_SIZE, "Distance: %f", getDistance());
+    snprintf (msg, MSG_BUFFER_SIZE, "%f", getDistance());
 
     Serial.println(String("Publishing message: ") + msg);
     

@@ -12,6 +12,7 @@ public class App {
 		CommChannel channel=null;
 		try {
             channel = new SerialCommChannel(serviceContainer,"COM4",9600);
+			serviceContainer.addObserver(channel);
         } catch (Exception e) {
             e.printStackTrace();
         }
