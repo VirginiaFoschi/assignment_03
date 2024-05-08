@@ -36,16 +36,18 @@ void WccsTask::tick()
     {
     case AUTOMATIC:
     {
-        if (this->container->isMsgReceived())
-        {
-            int value = this->container->getMsg().toInt();
-            this->container->setNextPosValve((value*180)/ 100);
-        }
         if (pressed)
         {
             this->container->getLcd()->print("Manual Mode");
             state = MANUAL;
             pressed = false;
+        }
+        if (this->container->isMsgReceived())
+        {
+            int value = (this->container->getMsg().toInt()*180)/100;
+            // Arrotondamento al multiplo di 5 più vicino
+            int roundedValvePos = (value + 2) / 5 * 5; 
+            this->container->setNextPosValve(roundedValvePos);
         }
     }
     break;

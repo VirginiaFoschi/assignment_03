@@ -1,7 +1,7 @@
 #ifndef __GATE__
 #define __GATE__
 #include "ServoMotor.h"
-#define DELTA 1
+#define DELTA 5
 
 
 class Gate

@@ -21,5 +21,9 @@ public interface Container {
     void updateState(float waterLevel);
 
     void notifyAllObserver();
+
+    float getWaterLevel();
+    
+    void setManualMode(boolean manual);
     
 }

@@ -17,11 +17,13 @@ public class App {
             e.printStackTrace();
         }
         
-
+		/*dashBoard */
         Vertx vertx = Vertx.vertx();
 		VertxHTTPServerExample service = new VertxHTTPServerExample(serviceContainer);
 		vertx.deployVerticle(service);
+		serviceContainer.addObserver(service);
 
+		/*Esp */
         Vertx vertx2 = Vertx.vertx(); /** vrtex make possibile to create reactive components: like threads but based on an event-loop-> when there's an event executes the handler */
 		MQTTAgent agent = new MQTTAgent(serviceContainer);
 		vertx2.deployVerticle(agent);

@@ -1,31 +1,63 @@
-div, form{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    border: 2px solid black;
-    background-color: antiquewhite;
-    border-radius: 10px;
-    padding: 20px 0px;
-    width: 70%;
-    margin: auto;
-    margin-top: 30px;
+#chartContainer {
+    width: 100%;
+    margin:20px, auto, 0px, auto;
+    height: 80%;
 }
+
+.container {
+    width: 100%;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
 
 label {
-    display: block;
-    /* Ogni label su una riga separata */
-    margin: 20px 0px;
-    /* Spazio tra le label */
+    margin: 20px 20px;
+    font-size: large;
+    color: #012A4A;
 }
 
-form>button {
-    margin-top: 20px;
+#labelRow{
+    display: flexbox;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+#Change {
+    width: 200px;
+    height: 40px;
+    background-color: #2A6F97;
+    color: white;
+    border-radius: 10px;
+    border-color: #A9D6E5;
+}
+
+#Input{
+    margin-top: 40px;
+}
+
+#Submit{
+    width: 80px;
+    height: 30px;
+    background-color: #2A6F97;
+    color: white;
+    border-radius: 10px;
+    border-color: #A9D6E5;
+}
+
+body {
+    
+    background-color: #A9D6E5;
 }
 
 h1 {
     text-align: center;
-    margin-top: 20px;
+    color: #012A4A;
+}
+
+
+
+#inputValue::-webkit-slider-thumb {
+    /* Colora il thumb dello slider per Firefox */
+    background-color: #2A6F97 !important;
 }

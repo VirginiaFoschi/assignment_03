@@ -15,6 +15,7 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 
 	private ServiceContainer service;
 	private Router router;
+	private String stop = "Stop";
 
 	public VertxHTTPServerExample(ServiceContainer service) {
 		this.service = service;
@@ -36,18 +37,20 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 				.allowedHeader("Access-Control-Allow-Origin")
 				.allowedHeader("Content-Type"));
 
-		// Mount the handler for all incoming requests at every path and HTTP method
-		// router.get().handler(context -> {
-		// 	Random random = new Random();
-		// 	context.json(
-		// 			new JsonObject().put("Sonar", random.nextInt(0, 200)).put("Valve", 180).put("State", "Tutto bene"));
-		// });
 
 		router.post().handler(context -> {
 			JsonObject body = context.getBodyAsJson(); // Verifica se il corpo è null
 			if (body != null) {
 				String value = body.getString("value"); // Verifica se "value" è correttamente estratto
 				System.out.println("Valore ricevuto: " + value);
+				if(value.contains(stop)) {
+					this.service.setManualMode(false);
+				}
+				else {
+					this.service.setManualMode(true);
+					this.service.setValveOpening(Integer.parseInt(value));
+				}
+				
 			} else {
 				System.out.println("Corpo della richiesta non disponibile o non è JSON valido.");
 			}
@@ -68,9 +71,8 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 
 	private void sendData(){
 		this.router.get().handler(context -> {
-			Random random = new Random();
 			context.json(
-					new JsonObject().put("Sonar", random.nextInt(0, 200)).put("Valve", 180).put("State", "Tutto bene"));
+					new JsonObject().put("Sonar", this.service.getWaterLevel()).put("Valve", this.service.getValveOpening()).put("State", this.service.getState()));
 		});
 	}
 
@@ -78,12 +80,5 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 	public void update() {
 		this.sendData();
 	}
-
-	// public static void main(String[] args) {
-	// 	Vertx vertx = Vertx.vertx();
-	// 	VertxHTTPServerExample service = new VertxHTTPServerExample();
-	// 	vertx.deployVerticle(service);
-
-	// }
 
 }

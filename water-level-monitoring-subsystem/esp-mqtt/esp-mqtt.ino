@@ -13,8 +13,8 @@ const float vs = 331.45 + 0.62 * temperature;
 
 /* wifi network info */
 
-const char* ssid = "FRITZ!Box 7530 LB";
-const char* password = "07577245428876606273";
+const char* ssid = "Davide wifi";
+const char* password = "davide2024";
 
 /* MQTT server address */
 const char* mqtt_server = "broker.mqtt-dashboard.com";
