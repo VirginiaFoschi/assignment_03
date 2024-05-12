@@ -124,8 +124,6 @@ public class ServiceContainer implements Container {
         return waterLevel;
     }
 
-
-
     @Override
     public void setManualMode(boolean manual) {
         this.manualMode = manual;

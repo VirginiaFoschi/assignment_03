@@ -78,3 +78,9 @@ Msg *MsgServiceClass::receiveMsg(Pattern &pattern)
     return NULL;
   }
 }
+
+void MsgServiceClass::clean() {
+  msgAvailable = false;
+  currentMsg = NULL;
+  content = "";
+}

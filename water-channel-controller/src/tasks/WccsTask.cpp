@@ -1,4 +1,5 @@
 #include "tasks/WccsTask.h"
+#include <string.h>
 
 
 volatile bool pressed = false;
@@ -27,7 +28,7 @@ void WccsTask::init(int period)
 {
     Task::init(period);
     this->state = AUTOMATIC;
-    this->container->getLcd()->print("Automatic Mode");
+    this->container->getLcd()->print("Automatic Mode", "0%");
 }
 
 void WccsTask::tick()
@@ -38,16 +39,17 @@ void WccsTask::tick()
     {
         if (pressed)
         {
-            this->container->getLcd()->print("Manual Mode");
             state = MANUAL;
             pressed = false;
         }
         if (this->container->isMsgReceived())
         {
-            int value = (this->container->getMsg().toInt()*180)/100;
+            String value_percent = this->container->getMsg();
+            int value = (value_percent.toInt()*180)/100;
             // Arrotondamento al multiplo di 5 più vicino
             int roundedValvePos = (value + 2) / 5 * 5; 
             this->container->setNextPosValve(roundedValvePos);
+            this->container->getLcd()->print("Automatic Mode", value_percent+"%");
         }
     }
     break;
@@ -55,14 +57,16 @@ void WccsTask::tick()
     {
         if (pressed)
         {
-            this->container->getLcd()->print("Automatic Mode");
             state = AUTOMATIC;
             pressed = false;
         }
         else
         {
+            this->container->clearBuffer();
             int value = this->container->getPotentiometer()->getValveOpeningLevel();
             this->container->setNextPosValve(value);
+            this->container->getLcd()->print("Manual Mode", String((value*100)/180)+"%");
+            this->container->sendMessage(String(value));
         }
     }
     break;

@@ -59,3 +59,7 @@ int Container::getNextPositionValve() {
 void Container::setNextPosValve(int pos) {
     this->nextPosValve = pos;
 }
+
+void Container::clearBuffer(){
+    MsgService.clean();
+}

@@ -30,6 +30,7 @@ public:
     String getMsg();
     int getNextPositionValve();
     void setNextPosValve(int pos);
+    void clearBuffer();
 
 };
 

@@ -13,8 +13,8 @@ const float vs = 331.45 + 0.62 * temperature;
 
 /* wifi network info */
 
-const char* ssid = "Davide wifi";
-const char* password = "davide2024";
+const char* ssid = "iPhone di Denise";
+const char* password = "jurisuca";
 
 /* MQTT server address */
 const char* mqtt_server = "broker.mqtt-dashboard.com";

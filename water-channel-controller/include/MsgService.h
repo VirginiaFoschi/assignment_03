@@ -39,6 +39,8 @@ public:
   Msg* receiveMsg(Pattern& pattern);
   
   void sendMsg(const String& msg);
+
+  void clean();
 };
 
 extern MsgServiceClass MsgService;

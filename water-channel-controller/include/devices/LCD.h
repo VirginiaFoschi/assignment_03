@@ -11,7 +11,7 @@ private:
 public:
   LCD();
   ~LCD();
-  void print(String string);
+  void print(String string,String string2);
 };
 
 #endif
