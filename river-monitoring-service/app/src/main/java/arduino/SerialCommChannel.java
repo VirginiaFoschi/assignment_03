@@ -20,9 +20,12 @@ public class SerialCommChannel implements CommChannel, SerialPortEventListener {
 	private BlockingQueue<String> queue;
 	private StringBuffer currentMsg = new StringBuffer("");
 	private ServiceContainer service;
+	private int priority;
+
 	
-	public SerialCommChannel(ServiceContainer service, String port, int rate) throws Exception {
+	public SerialCommChannel(ServiceContainer service, String port, int rate, int priority) throws Exception {
 		this.service = service;
+		this.priority = priority;
 		queue = new ArrayBlockingQueue<String>(100);
 
 		serialPort = new SerialPort(port);
@@ -122,5 +125,10 @@ public class SerialCommChannel implements CommChannel, SerialPortEventListener {
 		// TODO Auto-generated method stub
 		int valveOpening = this.service.getValveOpening();
 		this.sendMsg(Integer.toString(valveOpening));
+	}
+
+	@Override 
+	public int getPriority() {
+		return this.priority;
 	}
 }

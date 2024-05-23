@@ -20,8 +20,10 @@ import java.util.Map;
 
 import container.ServiceContainer;
 
-/*
+/**
  * MQTT Agent
+ * @author aricci
+ *
  */
 public class MQTTAgent extends AbstractVerticle {
 	
@@ -31,8 +33,12 @@ public class MQTTAgent extends AbstractVerticle {
 	private MqttClient client;  // MqttClient è ora un attributo della classe
 	private ServiceContainer service;
 
-	public MQTTAgent(ServiceContainer service) {
+	//
+	private int priority;
+
+	public MQTTAgent(ServiceContainer service, int priority) {
 		this.service = service;
+		this.priority = priority;
 	}
 
 	@Override
@@ -44,7 +50,7 @@ public class MQTTAgent extends AbstractVerticle {
 			log("subscribing...");
 			client.publishHandler(s -> {
 			  String waterLevel = s.payload().toString();
-			  this.service.updateState(Float.parseFloat(waterLevel));
+			  this.service.updateState(Float.parseFloat(waterLevel), this.priority);
 			  // Pubblica un messaggio sul topic TOPIC_NAMEFREQ ogni volta che un messaggio è ricevuto
 			   publishToFrequencyTopic(Integer.toString(this.service.getFreq()));
 			})

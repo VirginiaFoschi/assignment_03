@@ -3,6 +3,8 @@ package dashboard;
 
 import java.util.Random;
 
+import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
+
 import container.ServiceContainer;
 import include.Observer;
 import io.vertx.core.*;
@@ -11,14 +13,23 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 
+/**
+ * 
+ * @author aricci
+ *
+ */
+
 public class VertxHTTPServerExample extends AbstractVerticle implements Observer {
 
 	private ServiceContainer service;
 	private Router router;
 	private String stop = "Stop";
+	//
+	private int priority;
 
-	public VertxHTTPServerExample(ServiceContainer service) {
+	public VertxHTTPServerExample(ServiceContainer service, int priority) {
 		this.service = service;
+		this.priority = priority;
 	}
 
 	@Override
@@ -44,11 +55,12 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 				String value = body.getString("value"); // Verifica se "value" è correttamente estratto
 				System.out.println("Valore ricevuto: " + value);
 				if(value.contains(stop)) {
-					this.service.setManualMode(false);
+					//this.service.setManualMode(false);
+					this.service.releaseLock();
 				}
 				else {
-					this.service.setManualMode(true);
-					this.service.setValveOpening(Integer.parseInt(value));
+					//this.service.setManualMode(true);
+					this.service.setValveOpening(Integer.parseInt(value), this.priority);
 				}
 				
 			} else {
@@ -72,13 +84,18 @@ public class VertxHTTPServerExample extends AbstractVerticle implements Observer
 	private void sendData(){
 		this.router.get().handler(context -> {
 			context.json(
-					new JsonObject().put("Sonar", this.service.getWaterLevel()).put("Valve", this.service.getValveOpening()).put("State", this.service.getState()));
+					new JsonObject().put("Sonar", this.service.getWaterLevel()).put("Valve", this.service.getValveOpening()).put("State", this.service.getState()).put("canSend", this.priority>=this.service.getPriority()));
 		});
 	}
 
 	@Override
 	public void update() {
 		this.sendData();
+	}
+
+	@Override 
+	public int getPriority() {
+		return this.priority;
 	}
 
 }

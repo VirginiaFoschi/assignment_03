@@ -1,3 +1,9 @@
+/**
+ * Balzoni Margherita
+ * Castiglioni Chiara
+ * Foschi Virginia
+*/
+
 const N = 30 //arco temporale di un minuto
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -76,6 +82,16 @@ document.addEventListener('DOMContentLoaded', function () {
         sonar.innerText = "Water level: " + (dataRecived.Sonar > 10 ? 0 : 10 - dataRecived.Sonar);
         valve.innerText = "Valve Opening: " + dataRecived.Valve + "%";
         state.innerText = "State: " + dataRecived.State;
+
+        let btnChange = document.getElementById("Change")
+
+        if(dataRecived.canSend == false) {
+            btnChange.disabled=true;
+            btnChange.innerText = "Set Manual Mode";
+            document.getElementById("Input").style.display = 'none';
+        } else {
+            btnChange.disabled = false;
+        }
     }
     // update chart after specified time. 
 

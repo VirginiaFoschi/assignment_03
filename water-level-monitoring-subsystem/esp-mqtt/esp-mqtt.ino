@@ -1,6 +1,18 @@
+/**
+ * Balzoni Margherita
+ * Castiglioni Chiara
+ * Foschi Virginia
+*/
+
 #include <WiFi.h>
 #include <PubSubClient.h>
 #define MSG_BUFFER_SIZE  50
+
+/**
+ * 
+ * @author aricci
+ *
+ */
 
 // Pin configurations
 const int ledPinG = 4;  // Green LED pin
@@ -10,11 +22,10 @@ const int triggerPin = 17;
 const float temperature = 20;
 const float vs = 331.45 + 0.62 * temperature;
 
-
 /* wifi network info */
 
-const char* ssid = "iPhone di Denise";
-const char* password = "jurisuca";
+const char* ssid = "MQTT";
+const char* password = "qqwweerr";
 
 /* MQTT server address */
 const char* mqtt_server = "broker.mqtt-dashboard.com";

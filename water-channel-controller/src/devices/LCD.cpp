@@ -13,8 +13,12 @@ LCD::~LCD()
 
 void LCD::print(String string, String string2)
 {
-  lcd.clear();
-  lcd.print(string);
-  lcd.setCursor(0,1);
-  lcd.print(string2);
+  String str = string+" "+string2;
+  if(this->text != str) {
+    lcd.clear();
+    lcd.print(string);
+    lcd.setCursor(0,1);
+    lcd.print(string2);
+    this->text=str;
+  }
 }

@@ -8,7 +8,7 @@ public interface Container {
 
     int getValveOpening();
 
-    void setValveOpening(int valveOpening);
+    void setValveOpening(int valveOpening, int priority);
 
     String getState();
 
@@ -18,12 +18,16 @@ public interface Container {
 
     void setFreq(int freq);
 
-    void updateState(float waterLevel);
+    void updateState(float waterLevel, int priority);
 
     void notifyAllObserver();
 
     float getWaterLevel();
     
-    void setManualMode(boolean manual);
+    //void setManualMode(boolean manual);
+
+    void releaseLock();
+
+    int getPriority();
     
 }

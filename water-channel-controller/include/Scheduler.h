@@ -5,6 +5,12 @@
 
 #define MAX_TASKS 50
 
+/**
+ * 
+ * @author aricci
+ *
+ */
+
 class Scheduler
 {
 

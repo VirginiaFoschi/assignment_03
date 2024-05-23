@@ -3,6 +3,12 @@
 
 #include "Arduino.h"
 
+/**
+ * 
+ * @author aricci
+ *
+ */
+
 class Msg {
   String content;
 

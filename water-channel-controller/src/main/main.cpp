@@ -18,7 +18,7 @@ void setup()
   t1->init(100);
   sched.addTask(t1);
   Task *t2 = new WccsTask(container);
-  t2->init(150);
+  t2->init(200);
   sched.addTask(t2);
   
 }

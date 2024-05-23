@@ -12,6 +12,7 @@ void pressButton()
     {
         prevs = ts;
         pressed = true;
+        MsgService.sendMsg(String(-1));
     }
 }
 
@@ -42,12 +43,13 @@ void WccsTask::tick()
             state = MANUAL;
             pressed = false;
         }
-        if (this->container->isMsgReceived())
+        else if (this->container->isMsgReceived())
         {
             String value_percent = this->container->getMsg();
             int value = (value_percent.toInt()*180)/100;
             // Arrotondamento al multiplo di 5 più vicino
-            int roundedValvePos = (value + 2) / 5 * 5; 
+            //int roundedValvePos = (value + 2) / 5 * 5; 
+            int roundedValvePos = int(value/5 + 0.5) * 5;
             this->container->setNextPosValve(roundedValvePos);
             this->container->getLcd()->print("Automatic Mode", value_percent+"%");
         }
@@ -65,8 +67,9 @@ void WccsTask::tick()
             this->container->clearBuffer();
             int value = this->container->getPotentiometer()->getValveOpeningLevel();
             this->container->setNextPosValve(value);
-            this->container->getLcd()->print("Manual Mode", String((value*100)/180)+"%");
-            this->container->sendMessage(String(value));
+            int value_percent = (value*100)/180;
+            this->container->getLcd()->print("Manual Mode", String(value_percent)+"%");
+            this->container->sendMessage(String(value_percent));
         }
     }
     break;
